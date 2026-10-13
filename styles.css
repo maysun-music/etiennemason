@@ -373,7 +373,7 @@ h1 {
 
   .page {
     padding: 35px 24px 60px;
-    align-items: flex-start;
+    display: block;
   }
 
   .identity {
@@ -437,7 +437,7 @@ h1 {
     display: block;
 
     width: fit-content;
-    margin: 100px auto 0;
+    margin: max(100px, 25vh) auto 0;
 
     color: #000;
     text-decoration: none;
