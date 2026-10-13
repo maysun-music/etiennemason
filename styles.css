@@ -359,6 +359,11 @@ h1 {
   display: none;
 }
 
+/* Mobile availability link: hidden on desktop */
+
+.availability-mobile {
+  display: none;
+}
 
 /* --------------------------------------------------
    MOBILE
@@ -367,7 +372,7 @@ h1 {
 @media (max-width: 600px) {
 
   .page {
-    padding: 35px 24px;
+    padding: 35px 24px 60px;
     align-items: flex-start;
   }
 
@@ -389,27 +394,20 @@ h1 {
   }
 
   .location {
-
     margin-top: 3px;
-
     font-size: 12px;
-
     text-align: left;
-
   }
 
   .description {
     margin-top: 30px;
     font-size: 23px;
-
     text-align: center;
     line-height: 1.02;
   }
 
   .links {
-    /* pushes CV / Contact farther down the page */
     margin-top: 80px;
-
     align-items: center;
     width: 100%;
   }
@@ -423,36 +421,38 @@ h1 {
   }
 
   .links .maysun {
-
     margin-top: 10px;
-
     font-size: 12px;
-
   }
 
+  /* Hide desktop dropdown */
+
   .availability {
-    left: 50%;
-    right: auto;
-    bottom: 60px;
+    display: none;
+  }
 
-    transform: translateX(-50%);
+  /* Mobile link in normal page flow */
 
-    width: calc(100% - 48px);
+  .availability-mobile {
+    display: block;
+
+    width: fit-content;
+    margin: 100px auto 0;
+
+    color: #000;
+    text-decoration: none;
+
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+
     text-align: center;
   }
 
-  .availability summary {
-    font-size: 18px;
+  .availability-mobile:hover {
+    font-weight: 700;
   }
-
-  .availability[open] .availability-content {
-    right: 0;
-
-    max-height: calc(100dvh - 140px);
-
-    text-align: left;
-  }
-
 
 }
 

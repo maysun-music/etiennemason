@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Availability Request — Etienne Mason</title>
+
+    <meta name="description"
+        content="Submit an availability request for live audio engineering, A/V, recording, or creative audio work.">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+
+        /* ------------------------------------------
+           AVAILABILITY PAGE
+        ------------------------------------------ */
+
+        .request-page {
+            width: 100%;
+            max-width: 600px;
+
+            margin: 0 auto;
+            padding: 50px 24px 100px;
+        }
+
+        .request-back {
+            display: inline-block;
+
+            color: #000;
+            text-decoration: none;
+
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        .request-back:hover {
+            font-weight: 700;
+        }
+
+        .request-title {
+            margin: 80px 0 15px;
+
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: clamp(32px, 7vw, 52px);
+            font-weight: 700;
+
+            line-height: 1;
+            letter-spacing: -0.05em;
+        }
+
+        .request-intro {
+            margin: 0 0 45px;
+
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        /* Form uses existing styles.css rules */
+
+        #availability-form {
+            width: 100%;
+        }
+
+        #availability-form input,
+        #availability-form select,
+        #availability-form textarea {
+            font-size: 16px;
+        }
+
+        .submit-inquiry {
+            margin-top: 45px;
+        }
+
+        .availability-note {
+            margin-top: 25px;
+        }
+
+        @media (max-width: 600px) {
+
+            .request-page {
+                padding:
+                    40px 24px
+                    calc(80px + env(safe-area-inset-bottom));
+            }
+
+            .request-title {
+                margin-top: 75px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="grain-overlay"></div>
+
+    <main class="request-page">
+
+        <a class="request-back" href="index.html">
+            ← Back
+        </a>
+
+        <h1 class="request-title">
+            Availability<br>Request
+        </h1>
+
+        <p class="request-intro">
+            Please provide the details of your project.
+        </p>
+
+        <form id="availability-form"
+              action="https://formspree.io/f/mljgpwnj"
+              method="POST">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Name / Organization *"
+                aria-label="Name / Organization"
+                autocomplete="name"
+                required>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Email *"
+                aria-label="Email"
+                autocomplete="email"
+                required>
+
+            <input
+                type="text"
+                name="dates"
+                placeholder="Date(s) *"
+                aria-label="Date(s)"
+                required>
+
+            <input
+                type="text"
+                name="hours"
+                placeholder="Hours / Schedule"
+                aria-label="Hours / Schedule">
+
+            <input
+                type="text"
+                name="location"
+                placeholder="Location *"
+                aria-label="Location"
+                required>
+
+            <select
+                name="work_type"
+                aria-label="Type of Work"
+                required>
+
+                <option value="" disabled selected>
+                    Type of Work *
+                </option>
+
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="AV">A/V</option>
+                <option value="Live Recording">Live Recording</option>
+                <option value="Creative Audio">Creative Audio</option>
+                <option value="Other">Other</option>
+
+            </select>
+
+            <textarea
+                name="description"
+                placeholder="Project Description *"
+                aria-label="Project Description"
+                rows="3"
+                required></textarea>
+
+            <input
+                type="text"
+                name="budget"
+                placeholder="Rate / Budget"
+                aria-label="Rate / Budget">
+
+            <input
+                type="text"
+                name="referral"
+                placeholder="How did you hear about me?"
+                aria-label="How did you hear about me?">
+
+            <button
+                type="submit"
+                class="submit-inquiry">
+
+                Submit Request
+
+            </button>
+
+            <p class="availability-note">
+                Submitting a request does not confirm
+                availability or a booking.
+            </p>
+
+        </form>
+
+        <p id="form-success"
+           class="form-feedback"
+           role="status"
+           hidden>
+            Request received. Thank you.
+        </p>
+
+        <p id="form-error"
+           class="form-feedback"
+           role="alert"
+           hidden>
+            Something went wrong. Please try again or use the Contact link.
+        </p>
+
+    </main>
+
+    <script>
+
+        const form = document.getElementById("availability-form");
+        const successMessage = document.getElementById("form-success");
+        const errorMessage = document.getElementById("form-error");
+
+        form.addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            successMessage.hidden = true;
+            errorMessage.hidden = true;
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Submitting...";
+
+            try {
+
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    body: new FormData(form),
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("Submission failed");
+                }
+
+                form.reset();
+                form.hidden = true;
+                successMessage.hidden = false;
+
+            } catch (error) {
+
+                errorMessage.hidden = false;
+
+            } finally {
+
+                submitButton.disabled = false;
+                submitButton.textContent = "Submit Request";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
