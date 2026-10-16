@@ -53,9 +53,32 @@
 
             <nav class="links">
 
-                <a href="https://www.linkedin.com/in/etiennemason" target="_blank" rel="noopener noreferrer">CV</a>
+                <details class="route-menu">
 
-                <a href="mailto:etienne.mason@gmail.com">Contact</a>
+                    <summary>CV</summary>
+
+                    <div class="route-options">
+                        <a href="https://www.linkedin.com/in/etiennemason" target="_blank"
+                            rel="noopener noreferrer">LinkedIn</a>
+
+                        <a href="assets/etiennemason_webcv.pdf" target="_blank" rel="noopener noreferrer">.pdf</a>
+                    </div>
+
+                </details>
+
+                <details class="route-menu">
+
+                    <summary>Contact</summary>
+
+                    <div class="route-options">
+                        <a href="mailto:etienne.mason@gmail.com">Send Email</a>
+
+                        <button type="button" class="copy-email" data-email="etienne.mason@gmail.com">
+                            Copy Address
+                        </button>
+                    </div>
+
+                </details>
 
                 <a class="maysun" href="https://maysun.zip" target="_blank" rel="noopener noreferrer">MAYSUN</a>
 
@@ -178,6 +201,29 @@
                 submitButton.disabled = false;
                 submitButton.textContent = originalLabel;
             }
+        });
+
+        document.querySelectorAll(".copy-email").forEach(button => {
+            button.addEventListener("click", async () => {
+                const originalText = button.textContent;
+
+                try {
+                    await navigator.clipboard.writeText(button.dataset.email);
+
+                    button.textContent = "Copied!";
+
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 2000);
+
+                } catch (error) {
+                    button.textContent = "Unable to copy";
+
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 2000);
+                }
+            });
         });
     </script>
 

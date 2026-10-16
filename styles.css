@@ -133,6 +133,163 @@ h1 {
 
 
 /* --------------------------------------------------
+   SIGNAL ROUTING MENUS
+-------------------------------------------------- */
+
+.route-menu {
+  width: fit-content;
+}
+
+/* Parent label */
+
+.route-menu summary {
+  display: block;
+  width: fit-content;
+
+  cursor: pointer;
+  list-style: none;
+
+  font-size: clamp(18px, 1.8vw, 26px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.route-menu summary::marker {
+  content: "";
+}
+
+.route-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.route-menu summary:hover {
+  font-weight: 700;
+}
+
+/* Signal path */
+
+.route-options {
+  --route-line: rgba(0, 0, 0, 0.5);
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: fit-content;
+
+  margin: 8px 0 12px 5px;
+  padding-left: 16px;
+}
+
+/* Vertical line extends upward to CV / Contact */
+
+.route-options::before {
+  content: "";
+
+  position: absolute;
+
+  left: 5px;
+
+  top: -8px;
+  bottom: 12px;
+
+  width: 1px;
+
+  background: var(--route-line);
+}
+
+/* Destination links and buttons */
+
+.route-options a,
+.route-options button {
+  position: relative;
+
+  display: block;
+  width: fit-content;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+  color: #000;
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.025em;
+
+  text-decoration: none;
+  text-align: left;
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+.route-options a:hover,
+.route-options button:hover {
+  font-weight: 700;
+}
+
+/* Horizontal branches */
+
+.route-options a::before,
+.route-options button::before {
+  content: "";
+
+  position: absolute;
+
+  left: -11px;
+  top: 50%;
+
+  width: 10px;
+  height: 1px;
+
+  background: var(--route-line);
+}
+
+/* Connection dots */
+
+.route-options a::after,
+.route-options button::after {
+  content: "";
+
+  position: absolute;
+
+  left: -13px;
+  top: 50%;
+
+  width: 5px;
+  height: 5px;
+
+  transform: translateY(-50%);
+
+  border-radius: 50%;
+  background: #000;
+}
+
+/* Opening animation */
+
+.route-menu[open] .route-options {
+  animation: route-reveal 0.18s ease-out;
+}
+
+@keyframes route-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------
    AVAILABILITY REQUEST
 -------------------------------------------------- */
 
@@ -416,9 +573,6 @@ h1 {
     font-size: 21px;
   }
 
-  .links a[href^="mailto:"] {
-    font-weight: 700;
-  }
 
   .links .maysun {
     margin-top: 10px;
@@ -452,6 +606,26 @@ h1 {
 
   .availability-mobile:hover {
     font-weight: 700;
+  }
+
+  .route-menu summary {
+
+    font-size: 21px;
+
+  }
+
+  .route-options {
+
+    margin: 10px 0 15px 5px;
+
+  }
+
+  .route-options a,
+
+  .route-options button {
+
+    font-size: 16px;
+
   }
 
 }
