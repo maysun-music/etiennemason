@@ -5,7 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Etienne Mason</title>
+    <title>Etienne Mason | Live Audio Engineering, Corporate AV | Brooklyn, NY</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="canonical" href="https://etiennemason.com/">
+    <meta name="theme-color" content="#a2bff2">
+    <meta property="og:title" content="Etienne Mason | Live Audio Engineering and Creative Audio">
+    <meta property="og:description"
+        content="Live audio technician, corporate AV, instrument designer and composer based in Brooklyn, New York.">
+    <meta property="og:image" content="https://etiennemason.com/og.png">
+    <meta property="og:url" content="https://etiennemason.com/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Etienne Mason",
+      "jobTitle": "Live Audio Technician",
+      "url": "https://etiennemason.com/",
+      "address": { "@type": "PostalAddress", "addressLocality": "Brooklyn", "addressRegion": "NY", "addressCountry": "US" },
+      "sameAs": ["https://www.linkedin.com/in/etiennemason", "https://maysun.zip"]
+    }
+    </script>
 
     <meta name="description"
         content="Etienne Mason — Live Audio Technician, Corporate AV, Instrument Designer and Composer based in Brooklyn, New York.">
@@ -53,6 +74,10 @@
             <div class="availability-content">
 
                 <form id="availability-form" action="https://formspree.io/f/mljgpwnj" method="POST">
+
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none"
+                        aria-hidden="true">
+                    <input type="hidden" name="_subject" value="Availability request (etiennemason.com)">
 
                     <input type="text" id="inquiry-name" name="name" placeholder="Name / Organization *"
                         aria-label="Name / Organization" autocomplete="name" required>
@@ -125,6 +150,7 @@
             successMessage.hidden = true;
             errorMessage.hidden = true;
 
+            const originalLabel = submitButton.textContent;
             submitButton.disabled = true;
             submitButton.textContent = "Submitting...";
 
@@ -150,7 +176,7 @@
 
             } finally {
                 submitButton.disabled = false;
-                submitButton.textContent = "Submit Request";
+                submitButton.textContent = originalLabel;
             }
         });
     </script>
