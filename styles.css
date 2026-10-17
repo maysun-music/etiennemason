@@ -31,10 +31,10 @@ body {
   min-height: 100vh;
 
   padding:
-    clamp(40px, 9vw, 140px) clamp(60px, 11vw, 180px);
+    clamp(80px, 24vh, 280px) clamp(60px, 11vw, 180px) clamp(40px, 9vw, 140px);
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 
@@ -45,8 +45,6 @@ body {
 .identity {
   width: 100%;
   max-width: 1100px;
-
-  transform: translateY(-5vh);
 }
 
 
@@ -133,17 +131,19 @@ h1 {
 
 
 /* --------------------------------------------------
-   SIGNAL ROUTING MENUS
+   PATCH CABLE MENUS
 -------------------------------------------------- */
 
 .route-menu {
+  position: relative;
   width: fit-content;
 }
 
-/* Parent label */
-
 .route-menu summary {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
   width: fit-content;
 
   cursor: pointer;
@@ -167,46 +167,56 @@ h1 {
   font-weight: 700;
 }
 
-/* Signal path */
+/* Physical jacks */
 
-.route-options {
-  --route-line: rgba(0, 0, 0, 0.5);
+.route-menu .jack {
+  display: inline-block;
+  flex: 0 0 9px;
+
+  width: 9px;
+  height: 9px;
+
+  border: 1px solid #000;
+  border-radius: 50%;
+
+  background: #a2bff2;
 
   position: relative;
+  z-index: 2;
+}
 
+/* Parent jack is filled when patched */
+
+.route-menu[open] summary .jack {
+  background: #000;
+}
+
+.source-jacks {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.route-menu[open] summary .source-jacks .jack {
+  background: #000;
+}
+
+/* Destinations */
+
+.route-options {
+  position: relative;
   display: flex;
   flex-direction: column;
-
   width: fit-content;
-
-  margin: 8px 0 12px 5px;
-  padding-left: 16px;
+  padding: 24px 0 32px 95px;
 }
-
-/* Vertical line extends upward to CV / Contact */
-
-.route-options::before {
-  content: "";
-
-  position: absolute;
-
-  left: 5px;
-
-  top: -8px;
-  bottom: 12px;
-
-  width: 1px;
-
-  background: var(--route-line);
-}
-
-/* Destination links and buttons */
 
 .route-options a,
 .route-options button {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 9px;
 
-  display: block;
   width: fit-content;
 
   margin: 0;
@@ -223,9 +233,7 @@ h1 {
   letter-spacing: -0.025em;
 
   text-decoration: none;
-  text-align: left;
   white-space: nowrap;
-
   cursor: pointer;
 }
 
@@ -234,47 +242,53 @@ h1 {
   font-weight: 700;
 }
 
-/* Horizontal branches */
-
-.route-options a::before,
-.route-options button::before {
-  content: "";
-
-  position: absolute;
-
-  left: -11px;
-  top: 50%;
-
-  width: 10px;
-  height: 1px;
-
-  background: var(--route-line);
+.route-options a:hover .jack,
+.route-options button:hover .jack {
+  background: #000;
 }
 
-/* Connection dots */
+/* SVG cable layer */
 
-.route-options a::after,
-.route-options button::after {
-  content: "";
-
+.patch-cables {
   position: absolute;
+  inset: 0;
 
-  left: -13px;
-  top: 50%;
+  width: 100%;
+  height: 100%;
 
-  width: 5px;
-  height: 5px;
+  overflow: visible;
 
-  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
 
-  border-radius: 50%;
-  background: #000;
+.patch-cables path {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.8);
+  stroke-width: 4.5;
+  stroke-linecap: round;
 }
 
 /* Opening animation */
 
+:root {
+  interpolate-size: allow-keywords;
+}
+
+.route-menu::details-content {
+  height: 0;
+  overflow: clip;
+  transition:
+    height 0.25s ease,
+    content-visibility 0.25s ease allow-discrete;
+}
+
+.route-menu[open]::details-content {
+  height: auto;
+}
+
 .route-menu[open] .route-options {
-  animation: route-reveal 0.18s ease-out;
+  animation: route-reveal 0.25s ease-out;
 }
 
 @keyframes route-reveal {
@@ -288,6 +302,7 @@ h1 {
     transform: translateY(0);
   }
 }
+
 
 /* --------------------------------------------------
    AVAILABILITY REQUEST
@@ -615,10 +630,9 @@ h1 {
   }
 
   .route-options {
-
-    margin: 10px 0 15px 5px;
-
+    padding: 14px 0 18px 45px;
   }
+
 
   .route-options a,
 

@@ -55,26 +55,47 @@
 
                 <details class="route-menu">
 
-                    <summary>CV</summary>
+                    <summary>
+                        <span class="source-jacks">
+                            <span class="jack"></span>
+                            <span class="jack"></span>
+                        </span>
+                        CV
+                    </summary>
 
                     <div class="route-options">
-                        <a href="https://www.linkedin.com/in/etiennemason" target="_blank"
-                            rel="noopener noreferrer">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/etiennemason" target="_blank" rel="noopener noreferrer">
+                            <span class="jack"></span>LinkedIn
+                        </a>
 
-                        <a href="assets/etiennemason_webcv.pdf" target="_blank" rel="noopener noreferrer">.pdf</a>
+                        <a href="assets/etiennemason_webcv.pdf" target="_blank" rel="noopener noreferrer">
+                            <span class="jack"></span>.pdf
+                        </a>
                     </div>
 
                 </details>
 
                 <details class="route-menu">
 
-                    <summary>Contact</summary>
+                    <summary>
+                        <span class="source-jacks">
+                            <span class="jack"></span>
+                            <span class="jack"></span>
+                        </span>
+                        Contact
+                    </summary>
 
                     <div class="route-options">
-                        <a href="mailto:etienne.mason@gmail.com">Send Email</a>
+                        <a href="mailto:etienne.mason@gmail.com">
+                            <span class="jack"></span>Send Email
+                        </a>
 
                         <button type="button" class="copy-email" data-email="etienne.mason@gmail.com">
-                            Copy Address
+
+                            <span class="jack"></span>
+
+                            <span class="button-label">Copy Address</span>
+
                         </button>
                     </div>
 
@@ -205,26 +226,90 @@
 
         document.querySelectorAll(".copy-email").forEach(button => {
             button.addEventListener("click", async () => {
-                const originalText = button.textContent;
+                const label = button.querySelector(".button-label");
 
                 try {
                     await navigator.clipboard.writeText(button.dataset.email);
-
-                    button.textContent = "Copied!";
-
-                    setTimeout(() => {
-                        button.textContent = originalText;
-                    }, 2000);
-
+                    label.textContent = "Copied!";
                 } catch (error) {
-                    button.textContent = "Unable to copy";
+                    label.textContent = "Unable to copy";
+                }
 
-                    setTimeout(() => {
-                        button.textContent = originalText;
-                    }, 2000);
+                setTimeout(() => {
+                    label.textContent = "Copy Address";
+                }, 2000);
+            });
+        });
+
+        // Draw hanging patch cables between jacks
+
+
+        function drawPatchCables() {
+
+            document.querySelectorAll(".route-menu").forEach(menu => {
+
+                let svg = menu.querySelector(".patch-cables");
+
+                if (!svg) {
+                    svg = document.createElementNS(
+                        "http://www.w3.org/2000/svg", "svg"
+                    );
+
+                    svg.classList.add("patch-cables");
+                    menu.appendChild(svg);
+                }
+
+                svg.innerHTML = "";
+
+                if (!menu.open) return;
+
+                const origins = menu.querySelectorAll("summary .source-jacks .jack");
+                const destinations = menu.querySelectorAll(".route-options .jack");
+
+                const bounds = menu.getBoundingClientRect();
+
+                destinations.forEach((destination, index) => {
+
+                    const start = origins[index].getBoundingClientRect();
+
+                    const x1 = start.left + start.width / 2 - bounds.left;
+                    const y1 = start.top + start.height / 2 - bounds.top;
+
+                    const end = destination.getBoundingClientRect();
+
+                    const x2 = end.left + end.width / 2 - bounds.left;
+                    const y2 = end.top + end.height / 2 - bounds.top;
+
+
+                    const radius = 14;
+
+                    const path = document.createElementNS(
+                        "http://www.w3.org/2000/svg", "path"
+                    );
+
+                    path.setAttribute("d", `
+    M ${x1} ${y1}
+    L ${x1} ${y2 - radius}
+    Q ${x1} ${y2}, ${x1 + radius} ${y2}
+    L ${x2} ${y2}
+`);
+
+                    svg.appendChild(path);
+                });
+            });
+        }
+
+        document.querySelectorAll(".route-menu").forEach(menu => {
+            menu.addEventListener("toggle", () => {
+                drawPatchCables();
+
+                if (menu.open) {
+                    setTimeout(drawPatchCables, 300);
                 }
             });
         });
+
+        window.addEventListener("resize", drawPatchCables);
     </script>
 
 </body>
