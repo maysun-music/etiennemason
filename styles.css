@@ -192,9 +192,13 @@ h1 {
 }
 
 .source-jacks {
-  display: flex;
+  display: none;
   gap: 5px;
   align-items: center;
+}
+
+.route-menu[open] .source-jacks {
+  display: flex;
 }
 
 .route-menu[open] summary .source-jacks .jack {
@@ -559,7 +563,7 @@ h1 {
   }
 
   h1 {
-    font-size: 46px;
+    font-size: clamp(34px, 10.5vw, 46px);
     line-height: 0.8;
     letter-spacing: -0.08em;
     margin-left: -0.075em;
@@ -642,6 +646,33 @@ h1 {
 
   }
 
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .route-menu::details-content {
+
+    transition: none;
+
+  }
+
+  .route-menu[open] .route-options {
+
+    animation: none;
+
+  }
+
+}
+
+.route-menu summary:focus-visible,
+.route-options a:focus-visible,
+.route-options button:focus-visible,
+.links .maysun:focus-visible,
+.availability summary:focus-visible,
+.availability-mobile:focus-visible,
+.submit-inquiry:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 4px;
 }
 
 /* --------------------------------------------------
