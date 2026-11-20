@@ -58,21 +58,21 @@
                 </div>
 
                 <div class="service">
-                    <button type="button" class="service-title" aria-expanded="false" aria-controls="service-creative">
-                        Creative Sound
-                    </button>
-                    <span class="service-description" id="service-creative">
-                        Custom instruments, spatial audio and collaborative sound projects.
-                    </span>
-                </div>
-
-                <div class="service">
                     <button type="button" class="service-title" aria-expanded="false"
                         aria-controls="service-consulting">
                         Technical Consulting
                     </button>
                     <span class="service-description" id="service-consulting">
                         System design, equipment recommendations, optimization and documentation.
+                    </span>
+                </div>
+
+                <div class="service">
+                    <button type="button" class="service-title" aria-expanded="false" aria-controls="service-creative">
+                        Creative Sound
+                    </button>
+                    <span class="service-description" id="service-creative">
+                        Spatial audio, immersive sound systems, interactive installations and custom audio devices.
                     </span>
                 </div>
 
@@ -271,6 +271,10 @@
         document.querySelectorAll(".service-title").forEach(button => {
 
             button.addEventListener("click", () => {
+
+                if (window.matchMedia("(min-width: 601px) and (hover: hover) and (pointer: fine)").matches) {
+                    return;
+                }
 
                 const service = button.closest(".service");
                 const wasActive = service.classList.contains("active");
