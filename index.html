@@ -46,10 +46,37 @@
                 <p class="location">Brooklyn, New York, United States</p>
             </header>
 
-            <p class="description">
-                Live Audio Engineering &amp;<br>
-                Creative Sound
-            </p>
+            <div class="description">
+
+                <div class="service">
+                    <button type="button" class="service-title" aria-expanded="false" aria-controls="service-audio">
+                        Live Audio Engineering
+                    </button>
+                    <span class="service-description" id="service-audio">
+                        FOH, live performance, recording and corporate AV.
+                    </span>
+                </div>
+
+                <div class="service">
+                    <button type="button" class="service-title" aria-expanded="false" aria-controls="service-creative">
+                        Creative Sound
+                    </button>
+                    <span class="service-description" id="service-creative">
+                        Custom instruments, spatial audio and collaborative sound projects.
+                    </span>
+                </div>
+
+                <div class="service">
+                    <button type="button" class="service-title" aria-expanded="false"
+                        aria-controls="service-consulting">
+                        Technical Consulting
+                    </button>
+                    <span class="service-description" id="service-consulting">
+                        System design, equipment recommendations, optimization and documentation.
+                    </span>
+                </div>
+
+            </div>
 
             <nav class="links">
 
@@ -239,6 +266,28 @@
                     label.textContent = "Copy Address";
                 }, 2000);
             });
+        });
+
+        document.querySelectorAll(".service-title").forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const service = button.closest(".service");
+                const wasActive = service.classList.contains("active");
+
+                document.querySelectorAll(".service").forEach(item => {
+                    item.classList.remove("active");
+                    item.querySelector(".service-title")
+                        .setAttribute("aria-expanded", "false");
+                });
+
+                if (!wasActive) {
+                    service.classList.add("active");
+                    button.setAttribute("aria-expanded", "true");
+                }
+
+            });
+
         });
 
         // Draw hanging patch cables between jacks

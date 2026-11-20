@@ -97,6 +97,74 @@ h1 {
 
 }
 
+/* --------------------------------------------------
+   SERVICE DESCRIPTIONS
+-------------------------------------------------- */
+
+.service {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.service-title {
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+  color: inherit;
+
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+
+  cursor: pointer;
+}
+
+.service-description {
+  position: absolute;
+
+  left: calc(100% + 24px);
+  top: 50%;
+
+  width: max-content;
+  max-width: 280px;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+
+  transform: translateY(-50%);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+
+  pointer-events: none;
+}
+
+@media (min-width: 601px) {
+
+  .service-title:focus-visible+.service-description,
+  .service.active .service-description {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (min-width: 601px) and (hover: hover) and (pointer: fine) {
+  .service:hover .service-description {
+    opacity: 1;
+    visibility: visible;
+  }
+}
 
 /* --------------------------------------------------
    LINKS
@@ -582,6 +650,51 @@ h1 {
     line-height: 1.02;
   }
 
+  .service {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+  }
+
+  .service-description {
+    position: static;
+    transform: none;
+
+    width: 100%;
+    max-width: 280px;
+
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: center;
+
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+      opacity 0.2s ease,
+      max-height 0.25s ease,
+      margin-top 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+  .service.active .service-description {
+    max-height: 120px;
+    margin-top: 8px;
+
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .service.active {
+    margin-bottom: 10px;
+  }
+
   .links {
     margin-top: 80px;
     align-items: center;
@@ -649,6 +762,10 @@ h1 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
+  .service-description {
+    transition: none;
+  }
 
   .route-menu::details-content {
 
